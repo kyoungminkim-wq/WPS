@@ -202,6 +202,8 @@ C  SET ARGUMENTS
 	       fcst = gfld%ipdtmpl(9) / 60.
 	     else if ( gfld%ipdtmpl(8) .eq. 2 ) then  ! days
 	       fcst = gfld%ipdtmpl(9) * 24.
+	     else if ( gfld%ipdtmpl(19) .eq. 1 ) then 
+	       fcst = real(gfld%ipdtmpl(20))
 	     else
                call mprintf(.true.,ERROR,
      &           "Time unit in ipdtmpl(8), %i is not suported",
@@ -713,7 +715,6 @@ C  SET ARGUMENTS
      & i3 = gfld%ipdtmpl(2), i4 = gfld%ipdtmpl(10),
      & i5 = gfld%ipdtmpl(12), i6 = gfld%ipdtnum )
 
-
          ! Test this data record against list of desired variables 
          ! found in Vtable.
          ! ----
@@ -731,7 +732,16 @@ C  SET ARGUMENTS
      &          gfld%ipdtmpl(21) .eq. g2code(4,i) .and.
      &          gfld%ipdtnum    .eq. g2code(5,i) .and.
      &          gfld%ipdtmpl(3) .eq. g2code(6,i) .and.
-     &          gfld%ipdtmpl(4) .eq. g2code(7,i))) then   !Template
+     &          gfld%ipdtmpl(4) .eq. g2code(7,i)) .or.   !Template
+                ! only for PDT=48
+     &          (gfld%discipline .eq. g2code(1,i) .and.
+     &          gfld%ipdtmpl(1) .eq. g2code(2,i) .and.
+     &          gfld%ipdtmpl(2) .eq. g2code(3,i) .and.
+     &          gfld%ipdtmpl(21) .eq. g2code(4,i) .and.
+     &          gfld%ipdtnum    .eq. g2code(5,i) .and.
+     &          gfld%ipdtmpl(3) .eq. g2code(6,i) .and.
+     &          gfld%ipdtmpl(6) .eq. g2code(7,i) .and.
+     &          g2code(2,i) .eq. 13)) then
 
             call gf_free(gfld)
             call gf_getfld(cgrib,lengrib,n,.TRUE.,expand,gfld,ierr)
