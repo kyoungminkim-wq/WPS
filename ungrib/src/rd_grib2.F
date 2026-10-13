@@ -740,7 +740,7 @@ C  SET ARGUMENTS
      &          gfld%ipdtmpl(21) .eq. g2code(4,i) .and.
      &          gfld%ipdtnum    .eq. g2code(5,i) .and.
      &          gfld%ipdtmpl(3) .eq. g2code(6,i) .and.
-     &          gfld%ipdtmpl(6) .eq. g2code(7,i) .and.
+     &          gfld%ipdtmpl(8) .eq. g2code(7,i) .and.
      &          g2code(2,i) .eq. 13)) then
 
             call gf_free(gfld)
